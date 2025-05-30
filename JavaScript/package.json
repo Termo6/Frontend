@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "js-datepicker": "^5.18.4",
+    "luxon": "^3.6.1"
+  },
+  "name": "javascript",
+  "version": "1.0.0",
+  "main": "test.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

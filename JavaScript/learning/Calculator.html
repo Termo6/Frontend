@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body{
+            background-color: black;
+
+
+
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 2fr);
+            gap:10px;
+            width: 650px;
+            height: 700px;
+            justify-content: center;
+
+
+        }
+        .grid button{
+            border-radius: 100px;
+       
+
+
+        }
+        #textarea{
+            text-align: right;
+            display: flex;
+            justify-content: center;
+            
+            
+
+        
+
+        }
+        textarea{
+            resize: none;
+            width: 650px;
+            height:30%;
+            color: red;
+       
+        }
+    </style>
+</head>
+
+<body>
+   <div id="textarea"> <textarea readonly></textarea></div>
+    <div class="container">
+       
+
+        
+
+
+
+
+
+        <div class="grid">
+            <button onclick="
+            calc=calc+0;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">0</button>
+            <button onclick="
+            calc+=1;
+            console.log(`${calc}`) ;
+            
+
+            
+            
+            ">1</button>
+            <button onclick="
+            calc=calc+2;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">2</button>
+            <button onclick="
+            calc='';
+            console.log('Cleared.');
+            
+        
+            
+            ">C</button>
+            <button onclick="
+            calc=calc+3;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">3</button>
+            <button onclick="
+            calc=calc+4;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">4</button>
+            <button onclick="
+            calc=calc+5;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">5</button>
+            <button onclick="
+            calc=calc+6;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">6</button>
+            <button onclick="
+            calc=calc+7;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">7</button>
+            <button onclick="
+            calc=calc+8;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">8</button>
+            <button onclick="
+            calc=calc+9;
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">9</button>
+            <button onclick="
+            calc=calc+'+';
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">+</button>
+            <button onclick="
+            calc=calc+'-';
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">-</button>
+            <button onclick="
+            calc=calc+'*';
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">*</button>
+            <button onclick="
+            calc=calc+'/';
+            console.log(`${calc}`)
+
+              
+              
+            
+            ">/</button>
+            <button onclick="calc=eval(calc);
+            console.log(calc);
+            calc='';
+            
+            
+            
+            ">=</button>
+
+
+
+
+
+
+
+        </div>
+    </div>
+ <script>
+    let calc='';
+
+
+
+
+ </script>
+</body>
+
+</html>

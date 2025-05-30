@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tictactoe</title>
+    <style>
+      * {
+        font-family: monospace;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #dceefb;
+      }
+
+      header {
+        text-align: center;
+      }
+
+      .field {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .field button {
+        display: none;
+        background-color: #f9f9f9;
+        border: 2px solid black;
+        border-radius: 8px;
+        width: 200px;
+        height: 200px;
+        box-shadow: 2px 2px 0px 0px black;
+        overflow: hidden;
+      }
+
+      h2 {
+        display: inline-block;
+      }
+      .PlayerSelect {
+        display: inline-block;
+        background-color: #f9f9f9;
+        border: 2px solid black;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 2px 2px 0px 0px black;
+      }
+
+      #Player {
+        font-size: 20px;
+        font-weight: bolder;
+        text-align: center;
+      }
+      .circle {
+        border: 1px solid red;
+        margin: auto;
+        width: 80%;
+        height: 80%;
+        border-radius: 100px;
+        border-width: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Welcome to my tictactoe Game!</h1>
+      <div class="pregame">
+        <h2>Do you want to be</h2>
+
+        <button onclick="ChoosingPlayer('X')" class="PlayerSelect">X</button>
+        <h2>or</h2>
+
+        <button onclick="ChoosingPlayer('O')" class="PlayerSelect">O</button>
+      </div>
+    </header>
+
+    <main>
+      <div id="Player"></div>
+      <div class="field">
+        <button
+          class="play"
+          id="1"
+          onclick="game(player1,'1','player')"
+        ></button>
+        <button
+          class="play"
+          id="2"
+          onclick="game(player1,'2','player')"
+        ></button>
+        <button
+          class="play"
+          id="3"
+          onclick="game(player1,'3','player')"
+        ></button>
+        <button
+          class="play"
+          id="4"
+          onclick="game(player1,'4','player')"
+        ></button>
+        <button
+          class="play"
+          id="5"
+          onclick="game(player1,'5','player')"
+        ></button>
+        <button
+          class="play"
+          id="6"
+          onclick="game(player1,'6','player')"
+        ></button>
+        <button
+          class="play"
+          id="7"
+          onclick="game(player1,'7','player')"
+        ></button>
+        <button
+          class="play"
+          id="8"
+          onclick="game(player1,'8','player')"
+        ></button>
+        <button
+          class="play"
+          id="9"
+          onclick="game(player1,'9','player')"
+        ></button>
+      </div>
+
+      <div id="portrayingWinner"></div>
+    </main>
+
+    <script>
+      const buttons = document.getElementsByClassName("play");
+      let player1;
+      let place_;
+      let winner_;
+      const field = [];
+      const playerfield=[];
+      const botField=[];
+
+    
+      function ChoosingPlayer(symbol) {
+        for (let i = 0; i < buttons.length; i++) {
+          buttons[i].style.display = "block";
+        }
+        const pregame = document.getElementsByClassName("pregame");
+        for (let i = 0; i < pregame.length; i++) {
+          pregame[i].style.display = "none";
+        }
+        player1 = symbol;
+
+        document.getElementById("Player").innerHTML = `You are ${player1}`;
+
+        if(player1==='O'){
+          Bot();
+
+        }
+          
+        
+
+
+
+      }
+
+      function drawCircles(place) {
+        const circle = document.createElement("div");
+        circle.className = "circle";
+        circle.style.border = "5px solid red";
+        circle.style.margin = "auto";
+        circle.style.width = "60%";
+        circle.style.height = "60%";
+        circle.style.borderRadius = "50%";
+        document.getElementById(place).appendChild(circle);
+      }
+      function drawCross(place) {
+        const crossContainer = document.createElement("div");
+        crossContainer.style.position = "relative";
+        crossContainer.style.width = "80%";
+        crossContainer.style.height = "80%";
+        crossContainer.style.margin = "auto";
+
+        // Diagonaler Balken von oben links nach unten rechts
+        const diagonal1 = document.createElement("div");
+        diagonal1.style.position = "absolute";
+        diagonal1.style.top = "50%";
+        diagonal1.style.left = "50%";
+        diagonal1.style.width = "100%";
+        diagonal1.style.height = "10%"; // Dicke des Balkens
+        diagonal1.style.backgroundColor = "red";
+        diagonal1.style.transform = "translate(-50%, -50%) rotate(45deg)";
+        diagonal1.style.transformOrigin = "center";
+
+        // Diagonaler Balken von unten links nach oben rechts
+        const diagonal2 = document.createElement("div");
+        diagonal2.style.position = "absolute";
+        diagonal2.style.top = "50%";
+        diagonal2.style.left = "50%";
+        diagonal2.style.width = "100%";
+        diagonal2.style.height = "10%"; // Dicke des Balkens
+        diagonal2.style.backgroundColor = "red";
+        diagonal2.style.transform = "translate(-50%, -50%) rotate(-45deg)";
+        diagonal2.style.transformOrigin = "center";
+
+        crossContainer.appendChild(diagonal1);
+        crossContainer.appendChild(diagonal2);
+
+        // Container ins DOM einfügen
+        document.getElementById(place).appendChild(crossContainer);
+      }
+      function ChoosingPlace(input, place, player) {
+        const idx = Number(place) - 1;
+        if(player==='bot_'){
+          if (input === "X") {
+            writingX(place);
+            botField[idx]=true;
+          } else if (input === "O") {
+            writingO(place);
+            botField[idx]=true;
+          }
+        } else if(player==="player"){
+          if (input === "X") {
+            writingX(place);
+            playerfield[idx]=true;
+          } else if (input === "O") {
+            writingO(place);
+            playerfield[idx]=true;
+          }
+        }
+        ChoosingWinner();
+      }
+      function writingX(place){
+        drawCross(place);
+        document.getElementById(place).disabled = true;
+        field[Number(place) - 1] = true;
+      }
+
+      function writingO(place){
+        drawCircles(place);
+        document.getElementById(place).disabled = true;
+        field[Number(place) - 1] = true;
+      }
+      function getRandomNumber() {
+        return Math.floor(Math.random() * 9) + 1;
+      }
+
+      function Bot() {
+        let randomNumber=getRandomNumber();
+        console.log(randomNumber);
+        let bot;
+        if (player1 === "O") {
+          bot = "X";
+        } else if (player1 === "X") {
+          bot = "O";
+        }
+        for(let i=0;i<9;i++){
+          if(field[randomNumber]===true){
+            randomNumber=getRandomNumber();
+          }
+          else{
+            ChoosingPlace(bot,randomNumber,'bot_');
+            break;
+          }
+          
+
+        }
+      }
+        function ChoosingWinner() {
+          const wins = [
+            [0,1,2],[3,4,5],[6,7,8],
+            [0,3,6],[1,4,7],[2,5,8],
+            [0,4,8],[2,4,6]
+          ];
+          for (const combo of wins) {
+            if (playerfield[combo[0]] && playerfield[combo[1]] && playerfield[combo[2]]) {
+              winner_ = 'player';
+              return;
+            }
+            if (botField[combo[0]] && botField[combo[1]] && botField[combo[2]]) {
+              winner_ = 'bot';
+              return;
+            }
+          }
+        }
+
+      function game(input, field, player){
+        ChoosingPlace(input, field, player);
+        Bot();
+        let portrayingWinner = document.getElementById("portrayingWinner");
+        if (winner_==='bot'){
+          portrayingWinner.innerHTML="You Lose!";
+        }
+        else if (winner_==='player'){
+          portrayingWinner.innerHTML="You Win!";
+        }
+      }
+    </script>
+  </body>
+</html>
